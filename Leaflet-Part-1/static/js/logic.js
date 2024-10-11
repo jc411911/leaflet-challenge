@@ -1,7 +1,7 @@
-// Initialize the map and set its view to a chosen geographical coordinates and zoom level
-var map = L.map('map').setView([37.7749, -122.4194], 5); // Example coordinates (San Francisco)
+// Initialize the map 
+var map = L.map('map').setView([37.7749, -122.4194], 5); 
 
-// Add a tile layer to the map (you can use different tile providers)
+// Add a tile layer to the map 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
@@ -29,7 +29,7 @@ fetch(earthquakeUrl)
     })
     .catch(error => console.error("Error fetching earthquake data: ", error));
 
-// Define marker style based on magnitude and depth
+// Define based on magnitude and depth
 function styleFeature(feature) {
     var magnitude = feature.properties.mag;
     var depth = feature.geometry.coordinates[2];
@@ -39,7 +39,7 @@ function styleFeature(feature) {
                 depth > 30 ? '#d9ef8b' :
                 depth > 10 ? '#91cf60' : '#1a9850';
     
-    var size = magnitude * 6; // Magnitude affects marker size
+    var size = magnitude * 6; // Magnitude 
     return {
         radius: size,
         fillColor: color,
@@ -50,7 +50,7 @@ function styleFeature(feature) {
     };
 }
 
-// Add popups with additional information
+// Add popups 
 function onEachFeature(feature, layer) {
     if (feature.properties && feature.properties.place) {
         layer.bindPopup('<h3>' + feature.properties.place + '</h3>' +
@@ -58,7 +58,7 @@ function onEachFeature(feature, layer) {
     }
 }
 
-// Add a legend to the map
+// Add a legend
 var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (map) {

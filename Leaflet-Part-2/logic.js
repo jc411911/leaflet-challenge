@@ -13,7 +13,7 @@ var satelliteMap = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y
 // Add streetMap as the default base map
 streetMap.addTo(map);
 
-// Create layer groups for earthquakes and tectonic plates
+
 var earthquakes = new L.LayerGroup();
 var tectonicPlates = new L.LayerGroup();
 
@@ -23,25 +23,25 @@ var earthquakeUrl = 'https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/a
 fetch(earthquakeUrl)
     .then(response => response.json())
     .then(data => {
-        console.log("Earthquake Data: ", data); // Log the fetched data
+        console.log("Earthquake Data: ", data); // Log
 
         L.geoJSON(data, {
             pointToLayer: function(feature, latlng) {
                 var coords = feature.geometry.coordinates;
-                return L.circleMarker([coords[1], coords[0]], styleFeature(feature)); // Swap latlng
+                return L.circleMarker([coords[1], coords[0]], styleFeature(feature)); 
             },
             onEachFeature: onEachFeature
-        }).addTo(earthquakes); // Add to the earthquake layer
+        }).addTo(earthquakes);
     })
     .catch(error => console.error("Error fetching earthquake data:", error));
 
-// Fetch the tectonic plates data
+// Fetch the tectonic plates 
 var tectonicPlatesUrl = 'https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json';
 
 fetch(tectonicPlatesUrl)
     .then(response => response.json())
     .then(data => {
-        console.log("Tectonic Plates Data: ", data); // Log the tectonic plates data
+        console.log("Tectonic Plates Data: ", data); // Log 
         L.geoJSON(data, {
             style: {
                 color: "#FF5733",
@@ -51,7 +51,7 @@ fetch(tectonicPlatesUrl)
     })
     .catch(error => console.error("Error fetching tectonic plates data:", error));
 
-// Define marker style based on magnitude and depth
+// Define 
 function styleFeature(feature) {
     var magnitude = feature.properties.mag;
     var depth = feature.geometry.coordinates[2];
@@ -61,7 +61,7 @@ function styleFeature(feature) {
                 depth > 30 ? '#d9ef8b' :
                 depth > 10 ? '#91cf60' : '#1a9850';
     
-    var size = magnitude * 6; // Magnitude affects marker size
+    var size = magnitude * 6; // Magnitude 
     return {
         radius: size,
         fillColor: color,
@@ -80,7 +80,7 @@ function onEachFeature(feature, layer) {
     }
 }
 
-// Add a legend to the map for earthquake depth
+// Add a legend
 var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (map) {
@@ -108,7 +108,7 @@ function getColor(depth) {
            depth > 10 ? '#91cf60' : '#1a9850';
 }
 
-// Add base maps and overlay layers to the layer control
+
 var baseMaps = {
     "Street Map": streetMap,
     "Satellite Map": satelliteMap
@@ -119,9 +119,9 @@ var overlayMaps = {
     "Tectonic Plates": tectonicPlates
 };
 
-// Add layer controls to the map
+// Add layer 
 L.control.layers(baseMaps, overlayMaps).addTo(map);
 
 // Add earthquakes and tectonic plates layers to the map
 earthquakes.addTo(map);
-tectonicPlates.addTo(map); // Ensure this line exists to add the plates layer initially
+tectonicPlates.addTo(map); 
